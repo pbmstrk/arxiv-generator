@@ -54,7 +54,7 @@ def main(cfg: DictConfig):
         callbacks=[PrintingCallback("val_loss"), GeneratorCallback(data=val, encoder=encoder),
         early_stop_callback], **cfg.trainer)
 
-    trainer.fit(model, dm.train_dataloader, dm.val_dataloader)
+    trainer.fit(model, dm.train_dataloader(), dm.val_dataloader())
 
 
 if __name__ == "__main__":
