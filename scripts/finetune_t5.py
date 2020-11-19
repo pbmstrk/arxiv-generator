@@ -55,3 +55,7 @@ def main(cfg: DictConfig):
         early_stop_callback], **cfg.trainer)
 
     trainer.fit(model, dm.train_dataloader, dm.val_dataloader)
+
+
+if __name__ == "__main__":
+    main()
