@@ -1,0 +1,19 @@
+random:
+  seed: 42
+dataset:
+  filepath: "arxiv-metadata-oai-snapshot.json"
+  max_size: 100000
+  train_size: 80000
+  val_size: 20000
+encoder:
+  tokenizer_path: "t5-small"
+datamodule:
+  batch_size: 16
+model:
+  model_name: "t5-small"
+trainer:
+  gpus: 1
+  progress_bar_refresh_rate: 25
+  max_epochs: 25
+  deterministic: True
+

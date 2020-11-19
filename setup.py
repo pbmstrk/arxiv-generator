@@ -20,10 +20,19 @@ def load_requirements(
             reqs.append(ln)
     return reqs
 
+def get_extras_require():
+
+    requirements = {
+        "scripts": ["hydra-core"],
+    }
+
+    return requirements
+
 
 setup(
-    name="text_classification",
+    name="title_generator",
     author="Paul Baumstark",
     packages=find_packages(),
-    install_requires=load_requirements()
+    install_requires=load_requirements(),
+    extras_require=get_extras_require()
 )

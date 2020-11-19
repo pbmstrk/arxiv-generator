@@ -1,7 +1,11 @@
+import logging
+
 import numpy as np
 
 from pytorch_lightning.callbacks import Callback
 
+
+log = logging.getLogger(__name__)
 
 class GeneratorCallback(Callback):
 
@@ -13,11 +17,11 @@ class GeneratorCallback(Callback):
         data_len = len(self.data)
         idx = np.random.randint(low=0, high=data_len)
         abstract, title = self.data[idx]
-        print(f"Abstract:\n{abstract}")
-        print(f"Title:\n{title}")
+        log.info("Abstract:\n %s", abstract)
+        log.info("Title:\n %s", title)
 
         inputs = self.encoder(src_texts=abstract, return_tensors="pt")
         outputs = pl_module.generate(**inputs)[0]
         tokens = self.encoder.tokenizer.convert_ids_to_tokens(outputs, skip_special_tokens=True)
         string = self.encoder.tokenizer.convert_tokens_to_string(tokens)
-        print(f"Model title:\n{string}")
+        log.info("Model title:\n %s", string)
