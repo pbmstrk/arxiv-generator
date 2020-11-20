@@ -26,7 +26,8 @@ def main(cfg: DictConfig):
 
     filepath = hydra.utils.to_absolute_path(cfg.dataset.filepath)
 
-    dataset = ArxivDataset(filepath=filepath, max_size=cfg.dataset.max_size)
+    dataset = ArxivDataset(filepath=filepath, max_size=cfg.dataset.max_size,
+                        categories=cfg.dataset.categories)
     train, val = random_split(dataset, [cfg.dataset.train_size, cfg.dataset.val_size], 
                         generator=torch.Generator().manual_seed(42))
     encoder = Seq2SeqTokenizer(cfg.encoder.tokenizer_path)

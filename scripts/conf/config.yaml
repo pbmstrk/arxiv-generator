@@ -5,6 +5,7 @@ dataset:
   max_size: 100000
   train_size: 80000
   val_size: 20000
+  categories: ['stat.ML','cs.CV','cs.AI', 'cs.CL', 'cs.LG', 'cs.NE']
 encoder:
   tokenizer_path: "t5-small"
 datamodule:
@@ -18,4 +19,4 @@ trainer:
   deterministic: True
   val_check_interval: 0.5
   num_sanity_val_steps: 0
-checkpoint_path: "./checkpoints/" + "{epoch}"
+checkpoint_path: "./checkpoints/{epoch}"
