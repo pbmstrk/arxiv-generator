@@ -9,7 +9,7 @@ class ArxivDataset(
     def __init__(self, 
         filepath, 
         max_size=None,
-        return_elements=('title', 'abstract'),
+        return_elements=('abstract', 'title'),
         categories=None
     ):
 
