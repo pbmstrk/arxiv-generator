@@ -7,16 +7,17 @@ dataset:
   val_size: 20000
   categories: ['stat.ML','cs.CV','cs.AI', 'cs.CL', 'cs.LG', 'cs.NE']
 encoder:
-  tokenizer_path: "t5-small"
+  tokenizer_path: "facebook/bart-large"
 datamodule:
-  batch_size: 16
+  batch_size: 2
 model:
-  model_name: "t5-small"
+  model_name: "facebook/bart-large"
 trainer:
   gpus: 1
   progress_bar_refresh_rate: 25
-  max_epochs: 25
+  max_epochs: 5
   deterministic: True
-  val_check_interval: 0.5
+  val_check_interval: 0.25
   num_sanity_val_steps: 0
+  accumulate_grad_batches: 4
 checkpoint_path: "./checkpoints/{epoch}"

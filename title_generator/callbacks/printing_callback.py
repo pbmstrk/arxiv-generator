@@ -12,6 +12,6 @@ class PrintingCallback(Callback):
     def on_validation_end(self, trainer, pl_module):
         metrics = trainer.callback_metrics
         epoch = trainer.current_epoch
-        print("Epoch: %d \t Step %d", epoch, trainer.global_step)
-        print("Val loss: %.4f", metrics[self.monitor])
+        log.info("Epoch: %d \t Step %d", epoch, trainer.global_step)
+        log.info("Val loss: %.4f", metrics[self.monitor])
 
