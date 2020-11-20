@@ -10,8 +10,8 @@ from pytorch_lightning import Trainer, seed_everything
 from pytorch_lightning.callbacks import ModelCheckpoint, EarlyStopping
 
 
-from title_generator import TitleGenerator
-from title_generator.encoder import T5Encoder
+from title_generator import Seq2SeqTitleGenerator
+from title_generator.encoder import Seq2SeqTokenizer
 from title_generator.data import DataModule, ArxivDataset
 from title_generator.callbacks import PrintingCallback, GeneratorCallback
 
@@ -29,10 +29,10 @@ def main(cfg: DictConfig):
     dataset = ArxivDataset(filepath=filepath, max_size=cfg.dataset.max_size)
     train, val = random_split(dataset, [cfg.dataset.train_size, cfg.dataset.val_size], 
                         generator=torch.Generator().manual_seed(42))
-    encoder = T5Encoder(cfg.encoder.tokenizer_path)
+    encoder = Seq2SeqTokenizer(cfg.encoder.tokenizer_path)
     dm = DataModule(train=train, collate_fn=encoder.collate_fn, val=val, batch_size=cfg.datamodule.batch_size)
 
-    model = TitleGenerator(cfg.model.model_name)
+    model = Seq2SeqTitleGenerator(cfg.model.model_name)
 
     early_stop_callback = EarlyStopping(
         monitor="val_loss",
@@ -43,7 +43,7 @@ def main(cfg: DictConfig):
     )
 
     checkpoint_callback = ModelCheckpoint(
-        filepath="./checkpoints/" + "{epoch}",
+        filepath=cfg.checkpoint_path,
         save_top_k=1,
         verbose=True,
         monitor="val_loss",
