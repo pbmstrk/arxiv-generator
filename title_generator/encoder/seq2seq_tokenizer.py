@@ -1,14 +1,14 @@
-from transformers import T5Tokenizer
+from transformers import AutoTokenizer
 
-class T5Encoder:
+class Seq2SeqTokenizer:
 
-    def __init__(self, tokenizer_path='t5-small'):
-        self.tokenizer = T5Tokenizer.from_pretrained(tokenizer_path)
+    def __init__(self, tokenizer_path):
+        self.tokenizer = AutoTokenizer.from_pretrained(tokenizer_path)
 
     def __call__(self, src_texts, tgt_texts=None, **kwargs):
         return self.tokenizer.prepare_seq2seq_batch(
-            src_texts=src_texts, 
-            tgt_texts=tgt_texts, 
+            src_texts=src_texts,
+            tgt_texts=tgt_texts,
             **kwargs
         )
 

@@ -1,1 +1,1 @@
-from .model import TitleGenerator
+from .model import Seq2SeqTitleGenerator

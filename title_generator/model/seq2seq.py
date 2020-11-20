@@ -1,13 +1,14 @@
 import pytorch_lightning as pl
 import torch
-from transformers import T5ForConditionalGeneration
+from transformers import AutoModelForSeq2SeqLM
 
 
-class TitleGenerator(pl.LightningModule):
-    def __init__(self, model_name="t5-small"):
+class Seq2SeqTitleGenerator(pl.LightningModule):
+    def __init__(self, model_name):
 
         super().__init__()
-        self.model = T5ForConditionalGeneration.from_pretrained(
+        self.save_hyperparameters()
+        self.model = AutoModelForSeq2SeqLM.from_pretrained(
             model_name, return_dict=True
         )
 

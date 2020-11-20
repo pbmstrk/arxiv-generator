@@ -8,13 +8,14 @@ class ArxivDataset(
 
     def __init__(self, 
         filepath, 
-        max_size=100000,
-        return_elements=('title', 'abstract')
+        max_size=None,
+        return_elements=('title', 'abstract'),
+        categories=None
     ):
 
         self.return_elements = return_elements
 
-        self.build_dataset(filepath, max_size)
+        self.build_dataset(filepath, max_size, categories)
     
     def __getitem__(self, idx):
         dataset_element = self.dataset[idx]
