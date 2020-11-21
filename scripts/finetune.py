@@ -33,7 +33,11 @@ def main(cfg: DictConfig):
     encoder = Seq2SeqTokenizer(cfg.encoder.tokenizer_path)
     dm = DataModule(train=train, collate_fn=encoder.collate_fn, val=val, batch_size=cfg.datamodule.batch_size)
 
-    model = Seq2SeqTitleGenerator(cfg.model.model_name)
+    model = Seq2SeqTitleGenerator(
+        model_name=cfg.model.model_name,
+        optimizer_name=cfg.optimizer.name,
+        optimizer_args=cfg.optimizer.args
+    )
 
     early_stop_callback = EarlyStopping(
         monitor="val_loss",
@@ -44,7 +48,7 @@ def main(cfg: DictConfig):
     )
 
     checkpoint_callback = ModelCheckpoint(
-        filepath=cfg.checkpoint_path,
+        filepath=hydra.utils.to_absolute_path(cfg.checkpoint_path),
         save_top_k=1,
         verbose=True,
         monitor="val_loss",

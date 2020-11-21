@@ -4,13 +4,19 @@ from transformers import AutoModelForSeq2SeqLM
 
 
 class Seq2SeqTitleGenerator(pl.LightningModule):
-    def __init__(self, model_name):
+    def __init__(self, 
+        model_name, 
+        optimizer_name="Adam", 
+        optimizer_args={"lr": 3e-5}
+    ):
 
         super().__init__()
         self.save_hyperparameters()
         self.model = AutoModelForSeq2SeqLM.from_pretrained(
             model_name, return_dict=True
         )
+        self.optimizer_name = optimizer_name
+        self.optimizer_args = optimizer_args
 
     def forward(self, input_ids, **kwargs):
 
@@ -44,5 +50,5 @@ class Seq2SeqTitleGenerator(pl.LightningModule):
 
     def configure_optimizers(self):
 
-        optimizer = torch.optim.Adam(self.parameters(), lr=3e-5)
+        optimizer = getattr(torch.optim, self.optimizer_name)(self.parameters(), **self.optimizer_args)
         return optimizer

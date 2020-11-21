@@ -12,6 +12,10 @@ datamodule:
   batch_size: 2
 model:
   model_name: "facebook/bart-large"
+optimizer:
+  name: "Adam"
+  args:
+    lr: 3e-5
 trainer:
   gpus: 1
   progress_bar_refresh_rate: 25
