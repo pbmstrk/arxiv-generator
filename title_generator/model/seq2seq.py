@@ -53,7 +53,7 @@ class Seq2SeqTitleGenerator(pl.LightningModule):
         if hasattr(torch.optim, self.optimizer_name):
             optimizer = getattr(torch.optim, self.optimizer_name)(self.parameters(), **self.optimizer_args)
         elif hasattr(transformers.optimization, self.optimizer_name):
-            optimizer = getattr(torch.optim, self.optimizer_name)(self.parameters(), **self.optimizer_args)
+            optimizer = getattr(transformers.optimization, self.optimizer_name)(self.parameters(), **self.optimizer_args)
         else:
             raise AttributeError(f"{self.optimizer_name} is not a valid name, searched torch.optim and transformers.optimization.")
         return optimizer
