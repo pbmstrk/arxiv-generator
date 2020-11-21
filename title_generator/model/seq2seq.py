@@ -1,5 +1,6 @@
 import pytorch_lightning as pl
 import torch
+import transformers
 from transformers import AutoModelForSeq2SeqLM
 
 
@@ -49,6 +50,10 @@ class Seq2SeqTitleGenerator(pl.LightningModule):
         return self.model.generate(input_ids, **kwargs)
 
     def configure_optimizers(self):
-
-        optimizer = getattr(torch.optim, self.optimizer_name)(self.parameters(), **self.optimizer_args)
+        if hasattr(torch.optim, self.optimizer_name):
+            optimizer = getattr(torch.optim, self.optimizer_name)(self.parameters(), **self.optimizer_args)
+        elif hasattr(transformers.optimization, self.optimizer_name):
+            optimizer = getattr(torch.optim, self.optimizer_name)(self.parameters(), **self.optimizer_args)
+        else:
+            raise AttributeError(f"{self.optimizer_name} is not a valid name, searched torch.optim and transformers.optimization.")
         return optimizer
