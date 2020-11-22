@@ -8,3 +8,5 @@ envs/*
 *.egg-info
 
 __pycache__
+
+*.vim

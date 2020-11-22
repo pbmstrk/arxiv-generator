@@ -1,13 +1,14 @@
 from torch.utils.data import DataLoader
 
+
 class DataModule:
     def __init__(
         self,
         train,
         collate_fn,
-        val = None,
-        test = None,
-        batch_size = 16,
+        val=None,
+        test=None,
+        batch_size=16,
     ):
 
         self.train = train
@@ -30,7 +31,9 @@ class DataModule:
         if not self.val:
             raise ValueError
 
-        return DataLoader(self.val, batch_size=self.batch_size, collate_fn=self.collate_fn)
+        return DataLoader(
+            self.val, batch_size=self.batch_size, collate_fn=self.collate_fn
+        )
 
     def test_dataloader(self) -> DataLoader:
 

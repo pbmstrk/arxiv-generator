@@ -7,8 +7,8 @@ from pytorch_lightning.callbacks import Callback
 
 log = logging.getLogger(__name__)
 
-class GeneratorCallback(Callback):
 
+class GeneratorCallback(Callback):
     def __init__(self, data, encoder):
         self.data = data
         self.encoder = encoder
@@ -21,7 +21,6 @@ class GeneratorCallback(Callback):
         log.info("Title:\n %s", title)
 
         inputs = self.encoder(src_texts=abstract, return_tensors="pt")
-        outputs = pl_module.generate(**inputs)[0]
-        tokens = self.encoder.tokenizer.convert_ids_to_tokens(outputs, skip_special_tokens=True)
-        string = self.encoder.tokenizer.convert_tokens_to_string(tokens)
-        log.info("Model title:\n %s", string)
+        outputs = pl_module.generate(**inputs)
+        string = self.encoder.decode_batch(outputs, skip_special_tokens=True)
+        log.info("Model title:\n %s", string[0])
