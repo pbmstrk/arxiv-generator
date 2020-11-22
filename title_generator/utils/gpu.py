@@ -14,6 +14,6 @@ def move_args_to_device(func):
             key: value.to(self.device) if isinstance(value, torch.Tensor) else value
             for key, value in kwargs.items()
         }
-        func(self, *args, **kwargs)
+        return func(self, *args, **kwargs)
 
     return inner
