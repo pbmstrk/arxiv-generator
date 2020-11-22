@@ -1,19 +1,16 @@
 import logging
 
 import hydra
-from omegaconf import DictConfig, OmegaConf
-
 import torch
+from omegaconf import DictConfig, OmegaConf
+from pytorch_lightning import Trainer, seed_everything
+from pytorch_lightning.callbacks import EarlyStopping, ModelCheckpoint
 from torch.utils.data import random_split
 
-from pytorch_lightning import Trainer, seed_everything
-from pytorch_lightning.callbacks import ModelCheckpoint, EarlyStopping
-
-
 from title_generator import Seq2SeqTitleGenerator
+from title_generator.callbacks import GeneratorCallback, PrintingCallback
+from title_generator.data import ArxivDataset, DataModule
 from title_generator.encoder import Seq2SeqTokenizer
-from title_generator.data import DataModule, ArxivDataset
-from title_generator.callbacks import PrintingCallback, GeneratorCallback
 
 log = logging.getLogger(__name__)
 

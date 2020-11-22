@@ -1,2 +1,2 @@
-from .dataset import ArxivDataset
 from .datamodule import DataModule
+from .dataset import ArxivDataset
