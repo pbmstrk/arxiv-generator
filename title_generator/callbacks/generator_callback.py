@@ -20,5 +20,5 @@ class GeneratorCallback(Callback):
 
         inputs = self.encoder(src_texts=abstract, return_tensors="pt")
         outputs = pl_module.generate(**inputs)
-        string = self.encoder.decode_batch(outputs, skip_special_tokens=True)
+        string = self.encoder.batch_decode(outputs, skip_special_tokens=True)
         log.info("Model title:\n %s", string[0])

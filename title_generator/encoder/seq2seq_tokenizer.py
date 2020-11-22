@@ -21,5 +21,5 @@ class Seq2SeqTokenizer:
             padding="longest",
         )
 
-    def decode_batch(self, sequences, **kwargs):
+    def batch_decode(self, sequences, **kwargs):
         return self.tokenizer.batch_decode(sequences, **kwargs)
