@@ -10,3 +10,7 @@ envs/*
 __pycache__
 
 *.vim
+
+*.DS_Store
+
+*.ipynb
