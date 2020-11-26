@@ -1,7 +1,5 @@
-import time
 import streamlit as st
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
-
 
 st.title("Title Generator")
 
@@ -20,10 +18,8 @@ def generate_predictions(abstract, model, tokenizer, args):
 with st.spinner("Loading Model...\nDepending on your internet connection this may take a while."):
     tokenizer, model = load_model()
 
-
 args = {}
 abstract = st.text_area("Abstract", height=200)
-
 
 option = st.selectbox('Method of generation?',
         ('Greedy Search', 'Beam Search', 'Sampling'))
@@ -52,6 +48,3 @@ if clicked_compute:
             titles = generate_predictions(abstract, model, tokenizer, args)
         outputs.text_area("Outputs", titles)
         
-
-
-
