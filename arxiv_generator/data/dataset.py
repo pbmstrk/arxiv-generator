@@ -18,7 +18,7 @@ class ArxivDataset(Dataset, ArxivMixin):
 
     def __getitem__(self, idx):
         dataset_element = self.dataset[idx]
-        return tuple(map(dataset_element.get, self.return_elements))
+        return {key: dataset_element.get(key) for key in self.return_elements}
 
     def __len__(self):
         return len(self.dataset)

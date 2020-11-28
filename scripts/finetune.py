@@ -7,10 +7,10 @@ from pytorch_lightning import Trainer, seed_everything
 from pytorch_lightning.callbacks import EarlyStopping, ModelCheckpoint
 from torch.utils.data import random_split
 
-from title_generator import Seq2SeqTitleGenerator
-from title_generator.callbacks import GeneratorCallback, PrintingCallback
-from title_generator.data import ArxivDataset, DataModule
-from title_generator.encoder import Seq2SeqTokenizer
+from arxiv_generator import Seq2SeqGenerator
+from arxiv_generator.callbacks import GeneratorCallback, PrintingCallback
+from arxiv_generator.data import ArxivDataset, DataModule
+from arxiv_generator.encoder import Seq2SeqTokenizer
 
 log = logging.getLogger(__name__)
 
@@ -27,10 +27,10 @@ def main(cfg: DictConfig):
                         categories=cfg.dataset.categories)
     train, val = random_split(dataset, [cfg.dataset.train_size, cfg.dataset.val_size], 
                         generator=torch.Generator().manual_seed(42))
-    encoder = Seq2SeqTokenizer(cfg.encoder.tokenizer_path)
+    encoder = Seq2SeqTokenizer(cfg.encoder.tokenizer_path, predict_abstract=cfg.predict_abstract)
     dm = DataModule(train=train, collate_fn=encoder.collate_fn, val=val, batch_size=cfg.datamodule.batch_size)
 
-    model = Seq2SeqTitleGenerator(
+    model = Seq2SeqGenerator(
         model_name=cfg.model.model_name,
         optimizer_name=cfg.optimizer.name,
         optimizer_args=cfg.optimizer.args
@@ -53,7 +53,7 @@ def main(cfg: DictConfig):
     )
 
     trainer = Trainer(checkpoint_callback=checkpoint_callback,
-        callbacks=[PrintingCallback("val_loss"), GeneratorCallback(data=val, encoder=encoder),
+        callbacks=[PrintingCallback("val_loss"), GeneratorCallback(data=val, encoder=encoder, predict_abstract=cfg.predict_abstract),
         early_stop_callback], **cfg.trainer)
 
     trainer.fit(model, dm.train_dataloader(), dm.val_dataloader())

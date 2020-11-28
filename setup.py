@@ -30,7 +30,7 @@ def get_extras_require():
 
 
 setup(
-    name="title_generator",
+    name="arxiv_generator",
     author="Paul Baumstark",
     packages=find_packages(),
     install_requires=load_requirements(),

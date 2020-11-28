@@ -3,10 +3,10 @@ import torch
 import transformers
 from transformers import AutoModelForSeq2SeqLM
 
-from title_generator.utils import move_args_to_device
+from ..utils import move_args_to_device
 
 
-class Seq2SeqTitleGenerator(pl.LightningModule):
+class Seq2SeqGenerator(pl.LightningModule):
     def __init__(self, model_name, optimizer_name="Adam", optimizer_args={"lr": 3e-5}):
 
         super().__init__()
