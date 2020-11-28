@@ -1,3 +1,7 @@
+NAME="arxiv-generator"
+AUTHOR="Paul Baumstark"
+VERSION="0.1.0"
+
 import os
 
 from setuptools import setup, find_packages
@@ -24,14 +28,16 @@ def get_extras_require():
 
     requirements = {
         "scripts": ["hydra-core"],
+        "dashboard": ["streamlit"]
     }
 
     return requirements
 
 
 setup(
-    name="arxiv_generator",
-    author="Paul Baumstark",
+    name=NAME,
+    author=AUTHOR,
+    version=VERSION,
     packages=find_packages(),
     install_requires=load_requirements(),
     extras_require=get_extras_require()
