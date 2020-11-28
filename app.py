@@ -60,5 +60,5 @@ if clicked_compute:
     else:
         with st.spinner('Generating output...'):
             outputs = generate_predictions(inputs, model, tokenizer, generation_args)
-        outputs_area.text_area("Outputs", outputs)
+        outputs_area.text_area("Outputs", outputs, height=200 if predict_type == "Abstract" else 70)
 
