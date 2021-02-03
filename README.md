@@ -45,6 +45,13 @@ pip install ".[scripts]"
 
 The arguments are handled using [Hydra](https://github.com/facebookresearch/hydra), and can be modified either in the config file or overwritten in the command line.
 
+To load a model checkpoint,
+
+```python
+from arxiv_generator import Seq2SeqGenerator
+model = Seq2SeqGenerator.load_from_checkpoint(checkpoint_path="path/to/checkpoint")
+```
+
 ### Details
 
 The models were fine-tuned on abstract-title pairs extracted from the [Arxiv Dataset](https://www.kaggle.com/Cornell-University/arxiv). The `arxiv_generator` module includes the ArxivDataset class to enable easier use of the dataset.
